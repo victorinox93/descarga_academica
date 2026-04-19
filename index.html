@@ -1,392 +1,1150 @@
-<!DOCTYPE HTML>
-<!--
-	Dopetrope by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
-<html>
-	<head>
-		<title>Dopetrope by HTML5 UP</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-	</head>
-	<body class="homepage is-preload">
-		<div id="page-wrapper">
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sistema de Descarga Académica — Investigación</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --purple: #534AB7;
+    --purple-light: #EEEDFE;
+    --purple-dark: #3C3489;
+    --teal-light: #E1F5EE;
+    --teal-dark: #085041;
+    --amber-light: #FAEEDA;
+    --amber-dark: #633806;
+    --green-light: #EAF3DE;
+    --green-dark: #27500A;
+    --red-light: #FCEBEB;
+    --red-dark: #791F1F;
+    --blue-light: #E6F1FB;
+    --blue-dark: #0C447C;
+    --gray-light: #F1EFE8;
+    --gray-dark: #444441;
+    --bg: #F7F6F3;
+    --bg-card: #FFFFFF;
+    --bg-secondary: #F1EFE8;
+    --border: rgba(0,0,0,0.12);
+    --border-strong: rgba(0,0,0,0.22);
+    --text: #1a1a18;
+    --text-secondary: #6b6a66;
+    --text-tertiary: #9e9d99;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  /* ── HEADER ── */
+  header {
+    background: var(--bg-card);
+    border-bottom: 0.5px solid var(--border);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--text);
+  }
+  .logo-icon {
+    width: 30px; height: 30px;
+    background: var(--purple);
+    border-radius: 7px;
+    display: flex; align-items: center; justify-content: center;
+    color: white; font-size: 15px;
+  }
+  .header-sub { font-size: 12px; color: var(--text-secondary); font-weight: 400; }
+  /* ── LAYOUT ── */
+  .shell {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+  }
+  /* ── TABS ── */
+  .tab-bar {
+    display: flex;
+    background: var(--bg-card);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 4px;
+    gap: 4px;
+    margin-bottom: 1.5rem;
+    box-shadow: var(--shadow);
+  }
+  .tab {
+    flex: 1;
+    padding: 8px 12px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    color: var(--text-secondary);
+    background: none;
+    border: none;
+    border-radius: var(--radius-md);
+    transition: all .15s;
+    font-family: inherit;
+  }
+  .tab:hover:not(.active) { background: var(--bg-secondary); color: var(--text); }
+  .tab.active { background: var(--purple); color: white; }
+  /* ── VIEW ── */
+  .view { display: none; }
+  .view.active { display: block; }
+  /* ── CARD ── */
+  .card {
+    background: var(--bg-card);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+    box-shadow: var(--shadow);
+  }
+  /* ── FORM ── */
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+  .form-group { display: flex; flex-direction: column; gap: 5px; }
+  .form-group.full { grid-column: 1 / -1; }
+  label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: .05em;
+  }
+  input, select, textarea {
+    width: 100%;
+    padding: 8px 10px;
+    font-size: 13px;
+    border: 0.5px solid var(--border-strong);
+    border-radius: var(--radius-md);
+    background: var(--bg-card);
+    color: var(--text);
+    font-family: inherit;
+    transition: border-color .15s, box-shadow .15s;
+  }
+  input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--purple);
+    box-shadow: 0 0 0 3px rgba(83,74,183,.12);
+  }
+  textarea { resize: vertical; min-height: 76px; }
+  /* ── BUTTONS ── */
+  .btn {
+    padding: 8px 18px;
+    border-radius: var(--radius-md);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    border: 0.5px solid var(--border-strong);
+    background: var(--bg-card);
+    color: var(--text);
+    font-family: inherit;
+    transition: all .15s;
+  }
+  .btn:hover { background: var(--bg-secondary); }
+  .btn:active { transform: scale(.98); }
+  .btn-primary { background: var(--purple); color: white; border-color: var(--purple); }
+  .btn-primary:hover { background: var(--purple-dark); }
+  .btn-sm { padding: 5px 12px; font-size: 12px; }
+  .btn-danger { border-color: #A32D2D; color: #A32D2D; }
+  .btn-danger:hover { background: var(--red-light); }
+  /* ── BADGES ── */
+  .badge {
+    display: inline-flex; align-items: center;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .b-purple { background: var(--purple-light); color: var(--purple-dark); }
+  .b-teal { background: var(--teal-light); color: var(--teal-dark); }
+  .b-amber { background: var(--amber-light); color: var(--amber-dark); }
+  .b-green { background: var(--green-light); color: var(--green-dark); }
+  .b-red { background: var(--red-light); color: var(--red-dark); }
+  .b-gray { background: var(--gray-light); color: var(--gray-dark); }
+  .b-blue { background: var(--blue-light); color: var(--blue-dark); }
+  /* ── STEP INDICATORS ── */
+  .step-bar { display: flex; align-items: center; gap: 6px; margin-bottom: 1.25rem; }
+  .step-dot {
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 600;
+    flex-shrink: 0;
+  }
+  .s-done { background: var(--purple); color: white; }
+  .s-active { background: var(--purple-light); color: var(--purple); border: 1.5px solid var(--purple); }
+  .s-pending { background: var(--bg-secondary); color: var(--text-tertiary); }
+  .step-line { flex: 1; height: 1px; background: var(--border); }
+  .step-label { font-size: 11px; color: var(--text-secondary); white-space: nowrap; }
+  /* ── PROGRESS ── */
+  .progress-bar { width: 100%; height: 4px; background: var(--bg-secondary); border-radius: 2px; margin-bottom: 1.5rem; }
+  .progress-fill { height: 100%; background: var(--purple); border-radius: 2px; transition: width .3s; }
+  /* ── NIVEL CARDS ── */
+  .nivel-selector { display: flex; gap: 10px; margin-bottom: 1.25rem; }
+  .nivel-card {
+    flex: 1; border: 0.5px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 14px; cursor: pointer;
+    transition: all .15s;
+    background: var(--bg-card);
+  }
+  .nivel-card:hover { border-color: var(--purple); box-shadow: 0 0 0 3px rgba(83,74,183,.08); }
+  .nivel-card.selected { border: 2px solid var(--purple); background: var(--purple-light); }
+  .nivel-num { font-size: 20px; font-weight: 600; color: var(--purple); }
+  .nivel-label { font-size: 12px; color: var(--text-secondary); margin-top: 2px; font-weight: 500; }
+  .nivel-desc { font-size: 11px; color: var(--text-tertiary); margin-top: 8px; line-height: 1.5; }
+  /* ── BOLSA INFO ── */
+  .bolsa-info {
+    background: var(--bg-secondary);
+    border-radius: var(--radius-md);
+    padding: 10px 14px;
+    margin-top: 8px;
+  }
+  .bolsa-bar { width: 100%; height: 6px; background: rgba(0,0,0,0.08); border-radius: 3px; margin: 6px 0 4px; }
+  .bolsa-fill { height: 100%; border-radius: 3px; transition: all .4s; }
+  /* ── ACT ITEMS ── */
+  .act-item {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 10px 0; border-bottom: 0.5px solid var(--border);
+  }
+  .act-item:last-of-type { border-bottom: none; }
+  .act-check {
+    width: 18px; height: 18px;
+    border: 1.5px solid var(--border-strong);
+    border-radius: 4px; cursor: pointer;
+    flex-shrink: 0; margin-top: 3px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700;
+    transition: all .12s;
+  }
+  .act-check.checked { background: var(--purple); border-color: var(--purple); color: white; }
+  .act-icon {
+    width: 32px; height: 32px; border-radius: var(--radius-md);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px; flex-shrink: 0; margin-top: 1px;
+  }
+  /* ── ALERTS ── */
+  .alert-success {
+    background: var(--green-light); border: 0.5px solid #C0DD97;
+    border-radius: var(--radius-md); padding: 12px 16px;
+    font-size: 13px; color: var(--green-dark);
+    display: none; margin-top: 1rem;
+  }
+  .alert-warn {
+    background: var(--amber-light); border: 0.5px solid #FAC775;
+    border-radius: var(--radius-md); padding: 12px 16px;
+    font-size: 13px; color: var(--amber-dark);
+    display: none; margin-top: .75rem;
+  }
+  .actions-row { display: flex; gap: 8px; justify-content: flex-end; margin-top: 1.25rem; }
+  /* ── SECTION HEADING ── */
+  .sec-title { font-size: 15px; font-weight: 600; margin-bottom: 3px; }
+  .sec-sub { font-size: 13px; color: var(--text-secondary); margin-bottom: 1rem; }
+  /* ── METRICS ── */
+  .metrics-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 1.25rem; }
+  .metric {
+    background: var(--bg-card);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 14px;
+    box-shadow: var(--shadow);
+  }
+  .metric-label { font-size: 11px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 4px; font-weight: 600; }
+  .metric-value { font-size: 26px; font-weight: 600; color: var(--text); }
+  .metric-sub { font-size: 11px; color: var(--text-tertiary); margin-top: 2px; }
+  /* ── SOL TABLE ── */
+  .sol-row {
+    display: grid;
+    grid-template-columns: 1.8fr .9fr .7fr .9fr .7fr 90px;
+    gap: 8px;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 0.5px solid var(--border);
+    font-size: 12px;
+  }
+  .sol-row.header {
+    font-size: 10px; font-weight: 700;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    padding-bottom: 6px;
+  }
+  .score-bar-w { width: 100%; height: 3px; background: var(--bg-secondary); border-radius: 2px; margin-top: 3px; }
+  .score-fill { height: 100%; border-radius: 2px; }
+  /* ── DRAG ── */
+  .drag-pool {
+    min-height: 60px;
+    background: var(--bg-secondary);
+    border: 1.5px dashed var(--border-strong);
+    border-radius: var(--radius-md);
+    padding: 10px;
+    display: flex; flex-wrap: wrap; gap: 8px;
+    margin-bottom: 1rem;
+  }
+  .drag-empty { font-size: 12px; color: var(--text-tertiary); padding: 6px 4px; }
+  .drag-chip {
+    background: var(--bg-card);
+    border: 0.5px solid var(--border-strong);
+    border-radius: var(--radius-md);
+    padding: 8px 12px;
+    font-size: 12px; cursor: grab;
+    display: flex; flex-direction: column; gap: 2px;
+    transition: all .15s;
+    user-select: none;
+    box-shadow: var(--shadow);
+  }
+  .drag-chip:hover { border-color: var(--purple); box-shadow: 0 2px 6px rgba(83,74,183,.15); }
+  .drag-chip.dragging { opacity: .4; cursor: grabbing; }
+  .chip-name { font-weight: 600; color: var(--text); }
+  .chip-meta { font-size: 10px; color: var(--text-tertiary); }
+  .zonas-wrap { display: flex; gap: 10px; }
+  .tipo-zone {
+    flex: 1; min-width: 0;
+    background: var(--bg-card);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1rem;
+    box-shadow: var(--shadow);
+    transition: border-color .15s, background .15s;
+  }
+  .tipo-zone.dragover { border-color: var(--purple); background: var(--purple-light); }
+  .tipo-zone-hdr { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+  .tipo-zone-title { font-size: 12px; font-weight: 600; }
+  .tipo-zone-chips { display: flex; flex-direction: column; gap: 6px; min-height: 48px; }
+  .chip-in-zone {
+    display: flex; align-items: center; justify-content: space-between;
+    background: var(--bg-secondary); border-radius: 6px;
+    padding: 6px 10px; font-size: 12px;
+  }
+  .remove-btn {
+    background: none; border: none; cursor: pointer;
+    color: var(--text-secondary); font-size: 17px; line-height: 1; padding: 0 2px;
+  }
+  .remove-btn:hover { color: var(--red-dark); }
+  /* ── ESC FILTER ── */
+  .esc-filter { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; margin-bottom: 1.25rem; }
+  .esc-filter-label { font-size: 12px; font-weight: 600; color: var(--text-secondary); margin-right: 4px; }
+  /* ── ADMIN ESCUELAS ── */
+  .esc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 1.25rem; }
+  .esc-card {
+    background: var(--bg-card);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1rem;
+    box-shadow: var(--shadow);
+  }
+  .esc-hdr { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 8px; gap: 8px; }
+  .esc-name { font-size: 13px; font-weight: 600; }
+  .esc-bar { width: 100%; height: 6px; background: rgba(0,0,0,.08); border-radius: 3px; margin: 6px 0 4px; }
+  .esc-bar-fill { height: 100%; border-radius: 3px; transition: width .4s; }
+  .esc-detail { font-size: 11px; color: var(--text-secondary); }
+  .esc-acts { display: flex; gap: 5px; margin-top: 10px; align-items: center; flex-wrap: wrap; }
+  /* ── BOLSA USAGE BAR ── */
+  .usage-bar-wrap { margin-bottom: 1rem; }
+  .usage-bar-track { width: 100%; height: 8px; background: var(--bg-secondary); border-radius: 4px; }
+  .usage-bar-fill { height: 100%; border-radius: 4px; transition: width .4s; }
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 2rem;
+    font-size: 11px;
+    color: var(--text-tertiary);
+    border-top: 0.5px solid var(--border);
+    margin-top: 3rem;
+  }
+  /* ── RESUMEN BOX ── */
+  .resumen-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 13px; }
+  .resumen-row { display: flex; flex-direction: column; gap: 2px; }
+  .resumen-key { font-size: 11px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: .04em; font-weight: 600; }
+  .resumen-val { font-weight: 500; }
+  /* ── RESPONSIVE ── */
+  @media (max-width: 640px) {
+    .form-row { grid-template-columns: 1fr; }
+    .metrics-grid { grid-template-columns: 1fr 1fr; }
+    .esc-grid { grid-template-columns: 1fr 1fr; }
+    .zonas-wrap { flex-direction: column; }
+    .sol-row { grid-template-columns: 1fr 1fr; }
+    .sol-row .hide-mobile { display: none; }
+    .nivel-selector { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
 
-			<!-- Header -->
-				<section id="header">
+<header>
+  <div class="logo">
+    <div class="logo-icon">🎓</div>
+    <div>
+      <div>Descargas Académicas</div>
+      <div class="header-sub">Sistema institucional de investigación</div>
+    </div>
+  </div>
+  <div style="font-size:12px;color:var(--text-secondary)">Semestre 2025–2026</div>
+</header>
 
-					<!-- Logo -->
-						<h1><a href="index.html">Dopetrope</a></h1>
+<div class="shell">
 
-					<!-- Nav -->
-						<nav id="nav">
-							<ul>
-								<li class="current"><a href="index.html">Home</a></li>
-								<li>
-									<a href="#">Dropdown</a>
-									<ul>
-										<li><a href="#">Lorem ipsum dolor</a></li>
-										<li><a href="#">Magna phasellus</a></li>
-										<li><a href="#">Etiam dolore nisl</a></li>
-										<li>
-											<a href="#">Phasellus consequat</a>
-											<ul>
-												<li><a href="#">Magna phasellus</a></li>
-												<li><a href="#">Etiam dolore nisl</a></li>
-												<li><a href="#">Veroeros feugiat</a></li>
-												<li><a href="#">Nisl sed aliquam</a></li>
-												<li><a href="#">Dolore adipiscing</a></li>
-											</ul>
-										</li>
-										<li><a href="#">Veroeros feugiat</a></li>
-									</ul>
-								</li>
-								<li><a href="left-sidebar.html">Left Sidebar</a></li>
-								<li><a href="right-sidebar.html">Right Sidebar</a></li>
-								<li><a href="no-sidebar.html">No Sidebar</a></li>
-							</ul>
-						</nav>
+  <div class="tab-bar">
+    <button class="tab active" onclick="switchView('inv')">📝 Solicitud (investigador)</button>
+    <button class="tab" onclick="switchView('dir')">📊 Panel del director</button>
+    <button class="tab" onclick="switchView('admin')">⚙️ Configuración de bolsas</button>
+  </div>
 
-					<!-- Banner -->
-						<section id="banner">
-							<header>
-								<h2>Howdy. This is Dopetrope.</h2>
-								<p>A responsive template by HTML5 UP</p>
-							</header>
-						</section>
+  <!-- ═══════════════ INVESTIGADOR ═══════════════ -->
+  <div id="view-inv" class="view active">
 
-					<!-- Intro -->
-						<section id="intro" class="container">
-							<div class="row">
-								<div class="col-4 col-12-medium">
-									<section class="first">
-										<i class="icon solid featured fa-cog"></i>
-										<header>
-											<h2>Ipsum consequat</h2>
-										</header>
-										<p>Nisl amet dolor sit ipsum veroeros sed blandit consequat veroeros et magna tempus.</p>
-									</section>
-								</div>
-								<div class="col-4 col-12-medium">
-									<section class="middle">
-										<i class="icon solid featured alt fa-bolt"></i>
-										<header>
-											<h2>Magna etiam dolor</h2>
-										</header>
-										<p>Nisl amet dolor sit ipsum veroeros sed blandit consequat veroeros et magna tempus.</p>
-									</section>
-								</div>
-								<div class="col-4 col-12-medium">
-									<section class="last">
-										<i class="icon solid featured alt2 fa-star"></i>
-										<header>
-											<h2>Tempus adipiscing</h2>
-										</header>
-										<p>Nisl amet dolor sit ipsum veroeros sed blandit consequat veroeros et magna tempus.</p>
-									</section>
-								</div>
-							</div>
-							<footer>
-								<ul class="actions">
-									<li><a href="#" class="button large">Get Started</a></li>
-									<li><a href="#" class="button alt large">Learn More</a></li>
-								</ul>
-							</footer>
-						</section>
+    <div class="step-bar">
+      <div class="step-dot s-active" id="sdot-1">1</div>
+      <div class="step-line"></div>
+      <div class="step-dot s-pending" id="sdot-2">2</div>
+      <div class="step-line"></div>
+      <div class="step-dot s-pending" id="sdot-3">3</div>
+      <div class="step-line"></div>
+      <div class="step-dot s-pending" id="sdot-4">4</div>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="prog" style="width:25%"></div></div>
 
-				</section>
+    <!-- Paso 1 -->
+    <div id="step1">
+      <p class="sec-title">Datos generales</p>
+      <p class="sec-sub">Completa tu información y selecciona tu escuela para ver la bolsa disponible</p>
+      <div class="card">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Nombre completo</label>
+            <input type="text" id="f-nombre" placeholder="Dr. / Dra. Nombre Apellido">
+          </div>
+          <div class="form-group">
+            <label>Escuela / Unidad académica</label>
+            <select id="f-escuela" onchange="onEscuelaChange()">
+              <option value="">Selecciona tu escuela...</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Perfil de postulación</label>
+            <select id="f-perfil">
+              <option value="">Selecciona...</option>
+              <option>Investigador consolidado</option>
+              <option>Investigador en consolidación</option>
+              <option>Profesor con potencial de investigación</option>
+              <option>Caso estratégico institucional</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Periodo</label>
+            <select id="f-periodo">
+              <option>Semestre Ago–Dic 2025</option>
+              <option>Semestre Ene–Jun 2026</option>
+              <option>Año académico 2025–2026</option>
+            </select>
+          </div>
+        </div>
+        <div id="bolsa-info" style="display:none" class="bolsa-info">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px">
+            <span style="font-size:13px;font-weight:600" id="bolsa-esc-name">—</span>
+            <span class="badge b-blue" id="bolsa-badge">—</span>
+          </div>
+          <div class="bolsa-bar"><div class="bolsa-fill" id="bolsa-fill"></div></div>
+          <div style="font-size:12px;color:var(--text-secondary)" id="bolsa-detail">—</div>
+        </div>
+      </div>
 
-			<!-- Main -->
-				<section id="main">
-					<div class="container">
-						<div class="row">
-							<div class="col-12">
+      <p class="sec-title">Nivel de descarga solicitado</p>
+      <p class="sec-sub">Máximo 3 asignaturas por semestre, sujeto a la disponibilidad de tu escuela</p>
+      <div class="nivel-selector">
+        <div class="nivel-card selected" id="nc1" onclick="selectNivel(1)">
+          <div class="nivel-num">Tipo I</div>
+          <div class="nivel-label">1 asignatura</div>
+          <div class="nivel-desc">Para proyectos de alcance moderado con resultados verificables y cronograma claro.</div>
+        </div>
+        <div class="nivel-card" id="nc2" onclick="selectNivel(2)">
+          <div class="nivel-num">Tipo II</div>
+          <div class="nivel-label">2 asignaturas</div>
+          <div class="nivel-desc">Requiere productividad consistente y plan de trabajo sólido con compromisos específicos.</div>
+        </div>
+        <div class="nivel-card" id="nc3" onclick="selectNivel(3)">
+          <div class="nivel-num">Tipo III</div>
+          <div class="nivel-label">3 asignaturas</div>
+          <div class="nivel-desc">Solo para casos de alto impacto institucional o prioridad estratégica declarada.</div>
+        </div>
+      </div>
+      <div class="alert-warn" id="warn-cupo">
+        ⚠️ Tu escuela no cuenta con suficientes asignaturas disponibles en la bolsa para este nivel de descarga. Considera solicitar un nivel menor o comunícate con tu director de unidad.
+      </div>
+      <div class="actions-row">
+        <button class="btn btn-primary" onclick="goStep(2)">Siguiente →</button>
+      </div>
+    </div>
 
-								<!-- Portfolio -->
-									<section>
-										<header class="major">
-											<h2>My Portfolio</h2>
-										</header>
-										<div class="row">
-											<div class="col-4 col-6-medium col-12-small">
-												<section class="box">
-													<a href="#" class="image featured"><img src="images/pic02.jpg" alt="" /></a>
-													<header>
-														<h3>Ipsum feugiat et dolor</h3>
-													</header>
-													<p>Lorem ipsum dolor sit amet sit veroeros sed amet blandit consequat veroeros lorem blandit adipiscing et feugiat phasellus tempus dolore ipsum lorem dolore.</p>
-													<footer>
-														<ul class="actions">
-															<li><a href="#" class="button alt">Find out more</a></li>
-														</ul>
-													</footer>
-												</section>
-											</div>
-											<div class="col-4 col-6-medium col-12-small">
-												<section class="box">
-													<a href="#" class="image featured"><img src="images/pic03.jpg" alt="" /></a>
-													<header>
-														<h3>Sed etiam lorem nulla</h3>
-													</header>
-													<p>Lorem ipsum dolor sit amet sit veroeros sed amet blandit consequat veroeros lorem blandit adipiscing et feugiat phasellus tempus dolore ipsum lorem dolore.</p>
-													<footer>
-														<ul class="actions">
-															<li><a href="#" class="button alt">Find out more</a></li>
-														</ul>
-													</footer>
-												</section>
-											</div>
-											<div class="col-4 col-6-medium col-12-small">
-												<section class="box">
-													<a href="#" class="image featured"><img src="images/pic04.jpg" alt="" /></a>
-													<header>
-														<h3>Consequat et tempus</h3>
-													</header>
-													<p>Lorem ipsum dolor sit amet sit veroeros sed amet blandit consequat veroeros lorem blandit adipiscing et feugiat phasellus tempus dolore ipsum lorem dolore.</p>
-													<footer>
-														<ul class="actions">
-															<li><a href="#" class="button alt">Find out more</a></li>
-														</ul>
-													</footer>
-												</section>
-											</div>
-											<div class="col-4 col-6-medium col-12-small">
-												<section class="box">
-													<a href="#" class="image featured"><img src="images/pic05.jpg" alt="" /></a>
-													<header>
-														<h3>Blandit sed adipiscing</h3>
-													</header>
-													<p>Lorem ipsum dolor sit amet sit veroeros sed amet blandit consequat veroeros lorem blandit adipiscing et feugiat phasellus tempus dolore ipsum lorem dolore.</p>
-													<footer>
-														<ul class="actions">
-															<li><a href="#" class="button alt">Find out more</a></li>
-														</ul>
-													</footer>
-												</section>
-											</div>
-											<div class="col-4 col-6-medium col-12-small">
-												<section class="box">
-													<a href="#" class="image featured"><img src="images/pic06.jpg" alt="" /></a>
-													<header>
-														<h3>Etiam nisl consequat</h3>
-													</header>
-													<p>Lorem ipsum dolor sit amet sit veroeros sed amet blandit consequat veroeros lorem blandit adipiscing et feugiat phasellus tempus dolore ipsum lorem dolore.</p>
-													<footer>
-														<ul class="actions">
-															<li><a href="#" class="button alt">Find out more</a></li>
-														</ul>
-													</footer>
-												</section>
-											</div>
-											<div class="col-4 col-6-medium col-12-small">
-												<section class="box">
-													<a href="#" class="image featured"><img src="images/pic07.jpg" alt="" /></a>
-													<header>
-														<h3>Dolore nisl feugiat</h3>
-													</header>
-													<p>Lorem ipsum dolor sit amet sit veroeros sed amet blandit consequat veroeros lorem blandit adipiscing et feugiat phasellus tempus dolore ipsum lorem dolore.</p>
-													<footer>
-														<ul class="actions">
-															<li><a href="#" class="button alt">Find out more</a></li>
-														</ul>
-													</footer>
-												</section>
-											</div>
-										</div>
-									</section>
+    <!-- Paso 2 -->
+    <div id="step2" style="display:none">
+      <p class="sec-title">Plan de trabajo</p>
+      <p class="sec-sub">Describe el proyecto y las actividades comprometidas durante la descarga</p>
+      <div class="card">
+        <div class="form-row">
+          <div class="form-group full">
+            <label>Título del proyecto / línea de investigación</label>
+            <input type="text" id="f-titulo" placeholder="Ej: Modelos de aprendizaje automático aplicados a diagnóstico clínico temprano">
+          </div>
+          <div class="form-group full">
+            <label>Objetivo principal</label>
+            <textarea id="f-objetivo" placeholder="¿Qué lograrás con esta descarga? Sé concreto/a en los resultados esperados."></textarea>
+          </div>
+          <div class="form-group">
+            <label>Fecha de inicio estimada</label>
+            <input type="date" id="f-ini">
+          </div>
+          <div class="form-group">
+            <label>Fecha de término estimada</label>
+            <input type="date" id="f-fin">
+          </div>
+        </div>
+      </div>
 
-							</div>
-							<div class="col-12">
+      <p class="sec-title" style="margin-bottom:.5rem">Actividades comprometidas</p>
+      <p class="sec-sub">Selecciona todas las que apliquen a tu plan de trabajo (mínimo 2)</p>
+      <div class="card">
+        <div class="act-item">
+          <div class="act-check" onclick="toggleAct(this)"></div>
+          <div class="act-icon" style="background:var(--purple-light)">📄</div>
+          <div>
+            <div style="font-size:13px;font-weight:600">Publicación científica</div>
+            <div style="font-size:12px;color:var(--text-secondary)">Artículo en revista indexada JCR / Scopus — indica número esperado y cuartil objetivo</div>
+          </div>
+        </div>
+        <div class="act-item">
+          <div class="act-check" onclick="toggleAct(this)"></div>
+          <div class="act-icon" style="background:var(--teal-light)">🎓</div>
+          <div>
+            <div style="font-size:13px;font-weight:600">Dirección de tesis</div>
+            <div style="font-size:12px;color:var(--text-secondary)">Doctorado, maestría o licenciatura — especifica nivel y avance esperado al cierre</div>
+          </div>
+        </div>
+        <div class="act-item">
+          <div class="act-check" onclick="toggleAct(this)"></div>
+          <div class="act-icon" style="background:var(--amber-light)">💼</div>
+          <div>
+            <div style="font-size:13px;font-weight:600">Solicitud / gestión de financiamiento externo</div>
+            <div style="font-size:12px;color:var(--text-secondary)">Convocatoria nacional o internacional (CONAHCYT, H2020, NIH, NSF, etc.)</div>
+          </div>
+        </div>
+        <div class="act-item">
+          <div class="act-check" onclick="toggleAct(this)"></div>
+          <div class="act-icon" style="background:var(--purple-light)">🔬</div>
+          <div>
+            <div style="font-size:13px;font-weight:600">Desarrollo de prototipo / patente</div>
+            <div style="font-size:12px;color:var(--text-secondary)">Producto tecnológico funcional o solicitud de propiedad intelectual ante IMPI u organismo equivalente</div>
+          </div>
+        </div>
+        <div class="act-item">
+          <div class="act-check" onclick="toggleAct(this)"></div>
+          <div class="act-icon" style="background:var(--green-light)">📚</div>
+          <div>
+            <div style="font-size:13px;font-weight:600">Capítulo de libro / libro académico</div>
+            <div style="font-size:12px;color:var(--text-secondary)">Editorial reconocida con proceso de arbitraje o revisión por pares</div>
+          </div>
+        </div>
+        <div class="act-item">
+          <div class="act-check" onclick="toggleAct(this)"></div>
+          <div class="act-icon" style="background:var(--blue-light)">🌐</div>
+          <div>
+            <div style="font-size:13px;font-weight:600">Vinculación / transferencia de conocimiento</div>
+            <div style="font-size:12px;color:var(--text-secondary)">Convenio con sector productivo, gobierno o colaboración interinstitucional formalizada</div>
+          </div>
+        </div>
+        <div class="form-group" style="margin-top:14px">
+          <label>Productos verificables comprometidos</label>
+          <textarea id="f-productos" placeholder="Describe brevemente los productos que entregarás como evidencia al final del periodo. Ej: 2 artículos enviados a revista Q1, 1 tesis de maestría en fase de escritura, informe técnico de prototipo."></textarea>
+        </div>
+      </div>
 
-								<!-- Blog -->
-									<section>
-										<header class="major">
-											<h2>The Blog</h2>
-										</header>
-										<div class="row">
-											<div class="col-6 col-12-small">
-												<section class="box">
-													<a href="#" class="image featured"><img src="images/pic08.jpg" alt="" /></a>
-													<header>
-														<h3>Magna tempus consequat</h3>
-														<p>Posted 45 minutes ago</p>
-													</header>
-													<p>Lorem ipsum dolor sit amet sit veroeros sed et blandit consequat sed veroeros lorem et blandit adipiscing feugiat phasellus tempus hendrerit, tortor vitae mattis tempor, sapien sem feugiat sapien, id suscipit magna felis nec elit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos lorem ipsum dolor sit amet.</p>
-													<footer>
-														<ul class="actions">
-															<li><a href="#" class="button icon solid fa-file-alt">Continue Reading</a></li>
-															<li><a href="#" class="button alt icon solid fa-comment">33 comments</a></li>
-														</ul>
-													</footer>
-												</section>
-											</div>
-											<div class="col-6 col-12-small">
-												<section class="box">
-													<a href="#" class="image featured"><img src="images/pic09.jpg" alt="" /></a>
-													<header>
-														<h3>Aptent veroeros aliquam</h3>
-														<p>Posted 45 minutes ago</p>
-													</header>
-													<p>Lorem ipsum dolor sit amet sit veroeros sed et blandit consequat sed veroeros lorem et blandit adipiscing feugiat phasellus tempus hendrerit, tortor vitae mattis tempor, sapien sem feugiat sapien, id suscipit magna felis nec elit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos lorem ipsum dolor sit amet.</p>
-													<footer>
-														<ul class="actions">
-															<li><a href="#" class="button icon solid fa-file-alt">Continue Reading</a></li>
-															<li><a href="#" class="button alt icon solid fa-comment">33 comments</a></li>
-														</ul>
-													</footer>
-												</section>
-											</div>
-										</div>
-									</section>
+      <div class="actions-row">
+        <button class="btn" onclick="goStep(1)">← Anterior</button>
+        <button class="btn btn-primary" onclick="goStep(3)">Siguiente →</button>
+      </div>
+    </div>
 
-							</div>
-						</div>
-					</div>
-				</section>
+    <!-- Paso 3 -->
+    <div id="step3" style="display:none">
+      <p class="sec-title">Justificación y cobertura docente</p>
+      <p class="sec-sub">Explica cómo se garantizará la continuidad docente durante tu descarga</p>
+      <div class="card">
+        <div class="form-row">
+          <div class="form-group full">
+            <label>Justificación de la solicitud</label>
+            <textarea id="f-justif" style="min-height:96px" placeholder="¿Por qué necesitas esta descarga ahora? ¿Qué impacto institucional generará? ¿Cómo se alinea con las prioridades de investigación de tu unidad y de la universidad?"></textarea>
+          </div>
+          <div class="form-group full">
+            <label>Propuesta de cobertura docente</label>
+            <textarea id="f-cobertura" placeholder="Indica quién cubrirá cada asignatura liberada y bajo qué modalidad (profesor sustituto designado, redistribución interna de carga, grupo fusionado, etc.)."></textarea>
+          </div>
+          <div class="form-group">
+            <label>Descargas académicas previas</label>
+            <select id="f-prev">
+              <option>No, es mi primera solicitud</option>
+              <option>Sí, con cumplimiento total del plan comprometido</option>
+              <option>Sí, con cumplimiento parcial (justificado por escrito)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Alineación con prioridades institucionales</label>
+            <select id="f-alin">
+              <option>Fortalecimiento del posgrado</option>
+              <option>Acreditación de programas académicos</option>
+              <option>Captación de financiamiento externo</option>
+              <option>Innovación y transferencia tecnológica</option>
+              <option>Colaboración interinstitucional</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="actions-row">
+        <button class="btn" onclick="goStep(2)">← Anterior</button>
+        <button class="btn btn-primary" onclick="goStep(4)">Siguiente →</button>
+      </div>
+    </div>
 
-			<!-- Footer -->
-				<section id="footer">
-					<div class="container">
-						<div class="row">
-							<div class="col-8 col-12-medium">
-								<section>
-									<header>
-										<h2>Blandit nisl adipiscing</h2>
-									</header>
-									<ul class="dates">
-										<li>
-											<span class="date">Jan <strong>27</strong></span>
-											<h3><a href="#">Lorem dolor sit amet veroeros</a></h3>
-											<p>Ipsum dolor sit amet veroeros consequat blandit ipsum phasellus lorem consequat etiam.</p>
-										</li>
-										<li>
-											<span class="date">Jan <strong>23</strong></span>
-											<h3><a href="#">Ipsum sed blandit nisl consequat</a></h3>
-											<p>Blandit phasellus lorem ipsum dolor tempor sapien tortor hendrerit adipiscing feugiat lorem.</p>
-										</li>
-										<li>
-											<span class="date">Jan <strong>15</strong></span>
-											<h3><a href="#">Magna tempus lorem feugiat</a></h3>
-											<p>Dolore consequat sed phasellus lorem sed etiam nullam dolor etiam sed amet sit consequat.</p>
-										</li>
-										<li>
-											<span class="date">Jan <strong>12</strong></span>
-											<h3><a href="#">Dolore tempus ipsum feugiat nulla</a></h3>
-											<p>Feugiat lorem dolor sed nullam tempus lorem ipsum dolor sit amet nullam consequat.</p>
-										</li>
-										<li>
-											<span class="date">Jan <strong>10</strong></span>
-											<h3><a href="#">Blandit tempus aliquam?</a></h3>
-											<p>Feugiat sed tempus blandit tempus adipiscing nisl lorem ipsum dolor sit amet dolore.</p>
-										</li>
-									</ul>
-								</section>
-							</div>
-							<div class="col-4 col-12-medium">
-								<section>
-									<header>
-										<h2>What's this all about?</h2>
-									</header>
-									<a href="#" class="image featured"><img src="images/pic10.jpg" alt="" /></a>
-									<p>
-										This is <strong>Dopetrope</strong> a free, fully responsive HTML5 site template by
-										<a href="http://twitter.com/ajlkn">AJ</a> for <a href="http://html5up.net/">HTML5 UP</a> It's released for free under
-										the <a href="http://html5up.net/license/">Creative Commons Attribution</a> license so feel free to use it for any personal or commercial project &ndash; just don't forget to credit us!
-									</p>
-									<footer>
-										<ul class="actions">
-											<li><a href="#" class="button">Find out more</a></li>
-										</ul>
-									</footer>
-								</section>
-							</div>
-							<div class="col-4 col-6-medium col-12-small">
-								<section>
-									<header>
-										<h2>Tempus consequat</h2>
-									</header>
-									<ul class="divided">
-										<li><a href="#">Lorem ipsum dolor sit amet sit veroeros</a></li>
-										<li><a href="#">Sed et blandit consequat sed tlorem blandit</a></li>
-										<li><a href="#">Adipiscing feugiat phasellus sed tempus</a></li>
-										<li><a href="#">Hendrerit tortor vitae mattis tempor sapien</a></li>
-										<li><a href="#">Sem feugiat sapien id suscipit magna felis nec</a></li>
-										<li><a href="#">Elit class aptent taciti sociosqu ad litora</a></li>
-									</ul>
-								</section>
-							</div>
-							<div class="col-4 col-6-medium col-12-small">
-								<section>
-									<header>
-										<h2>Ipsum et phasellus</h2>
-									</header>
-									<ul class="divided">
-										<li><a href="#">Lorem ipsum dolor sit amet sit veroeros</a></li>
-										<li><a href="#">Sed et blandit consequat sed tlorem blandit</a></li>
-										<li><a href="#">Adipiscing feugiat phasellus sed tempus</a></li>
-										<li><a href="#">Hendrerit tortor vitae mattis tempor sapien</a></li>
-										<li><a href="#">Sem feugiat sapien id suscipit magna felis nec</a></li>
-										<li><a href="#">Elit class aptent taciti sociosqu ad litora</a></li>
-									</ul>
-								</section>
-							</div>
-							<div class="col-4 col-12-medium">
-								<section>
-									<header>
-										<h2>Vitae tempor lorem</h2>
-									</header>
-									<ul class="social">
-										<li><a class="icon brands fa-facebook-f" href="#"><span class="label">Facebook</span></a></li>
-										<li><a class="icon brands fa-twitter" href="#"><span class="label">Twitter</span></a></li>
-										<li><a class="icon brands fa-dribbble" href="#"><span class="label">Dribbble</span></a></li>
-										<li><a class="icon brands fa-tumblr" href="#"><span class="label">Tumblr</span></a></li>
-										<li><a class="icon brands fa-linkedin-in" href="#"><span class="label">LinkedIn</span></a></li>
-									</ul>
-									<ul class="contact">
-										<li>
-											<h3>Address</h3>
-											<p>
-												Untitled Incorporated<br />
-												1234 Somewhere Road Suite<br />
-												Nashville, TN 00000-0000
-											</p>
-										</li>
-										<li>
-											<h3>Mail</h3>
-											<p><a href="#">someone@untitled.tld</a></p>
-										</li>
-										<li>
-											<h3>Phone</h3>
-											<p>(800) 000-0000</p>
-										</li>
-									</ul>
-								</section>
-							</div>
-							<div class="col-12">
+    <!-- Paso 4 -->
+    <div id="step4" style="display:none">
+      <p class="sec-title">Resumen y envío</p>
+      <p class="sec-sub">Revisa los datos antes de enviar tu solicitud al director de unidad</p>
+      <div class="card">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px">
+          <div>
+            <div style="font-size:16px;font-weight:700" id="r-nombre">—</div>
+            <div style="font-size:13px;color:var(--text-secondary)" id="r-escuela">—</div>
+          </div>
+          <span class="badge b-purple" style="font-size:13px;padding:5px 14px" id="r-nivel">Tipo I — 1 asignatura</span>
+        </div>
+        <div style="border-top:0.5px solid var(--border);padding-top:14px">
+          <div class="resumen-grid">
+            <div class="resumen-row"><span class="resumen-key">Perfil</span><span class="resumen-val" id="r-perfil">—</span></div>
+            <div class="resumen-row"><span class="resumen-key">Periodo</span><span class="resumen-val" id="r-periodo">—</span></div>
+            <div class="resumen-row"><span class="resumen-key">Proyecto</span><span class="resumen-val" id="r-proyecto">—</span></div>
+            <div class="resumen-row"><span class="resumen-key">Alineación</span><span class="resumen-val" id="r-alin">—</span></div>
+            <div class="resumen-row" style="grid-column:1/-1">
+              <span class="resumen-key">Asignaturas solicitadas</span>
+              <span class="resumen-val" style="color:var(--purple);font-size:15px" id="r-asig">—</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="actions-row">
+        <button class="btn" onclick="goStep(3)">← Anterior</button>
+        <button class="btn btn-primary" onclick="enviar()">Enviar solicitud ↗</button>
+      </div>
+      <div class="alert-success" id="suc-inv">
+        ✅ Tu solicitud fue enviada correctamente. Tu director de unidad recibirá la notificación y podrá revisarla en el panel de asignación. Recibirás una respuesta al correo institucional registrado.
+      </div>
+    </div>
+  </div>
 
-								<!-- Copyright -->
-									<div id="copyright">
-										<ul class="links">
-											<li>&copy; Untitled. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-										</ul>
-									</div>
+  <!-- ═══════════════ DIRECTOR ═══════════════ -->
+  <div id="view-dir" class="view">
+    <div class="esc-filter">
+      <span class="esc-filter-label">Escuela:</span>
+      <div id="esc-filter-btns" style="display:flex;gap:6px;flex-wrap:wrap"></div>
+    </div>
 
-							</div>
-						</div>
-					</div>
-				</section>
+    <div class="metrics-grid">
+      <div class="metric">
+        <div class="metric-label">Bolsa total</div>
+        <div class="metric-value" id="m-total">—</div>
+        <div class="metric-sub">asignaturas autorizadas</div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">Asignadas</div>
+        <div class="metric-value" id="m-asig">—</div>
+        <div class="metric-sub">este semestre</div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">Disponibles</div>
+        <div class="metric-value" id="m-disp" style="color:var(--green-dark)">—</div>
+        <div class="metric-sub">por distribuir</div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">Solicitudes</div>
+        <div class="metric-value" id="m-sol">—</div>
+        <div class="metric-sub">en esta escuela</div>
+      </div>
+    </div>
 
-		</div>
+    <div class="card usage-bar-wrap">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+        <span style="font-size:13px;font-weight:600">Uso de bolsa — <span id="esc-dir-name" style="font-weight:400;color:var(--text-secondary)">—</span></span>
+        <span style="font-size:12px;color:var(--text-secondary)" id="bolsa-pct-txt">—</span>
+      </div>
+      <div class="usage-bar-track">
+        <div class="usage-bar-fill" id="bolsa-pct-bar" style="width:0%"></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text-tertiary);margin-top:4px">
+        <span>0</span><span id="bolsa-max-lbl">—</span>
+      </div>
+    </div>
 
-		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.dropotron.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
+    <p class="sec-title">Solicitudes recibidas</p>
+    <p class="sec-sub" style="margin-bottom:.75rem">Ordenadas por puntaje (productividad 35 · plan 25 · trayectoria 15 · alineación 15 · factibilidad 10)</p>
+    <div class="card" style="padding:.75rem 1.25rem">
+      <div class="sol-row header">
+        <div>Investigador/a</div>
+        <div>Perfil</div>
+        <div>Solicita</div>
+        <div>Puntaje</div>
+        <div>Asig.</div>
+        <div>Estado</div>
+      </div>
+      <div id="dir-sol-list"></div>
+    </div>
 
-	</body>
+    <p class="sec-title" style="margin-top:.5rem">Asignación por tipo de descarga</p>
+    <p class="sec-sub">Arrastra las solicitudes aprobadas a la zona correspondiente. El sistema valida automáticamente contra la bolsa disponible.</p>
+    <p style="font-size:12px;color:var(--text-secondary);margin-bottom:6px;font-weight:500">Cola de pendientes</p>
+    <div class="drag-pool" id="drag-pool">
+      <span class="drag-empty">Todas las solicitudes están asignadas o no hay pendientes.</span>
+    </div>
+
+    <div class="zonas-wrap">
+      <div class="tipo-zone" id="zona-1"
+        ondragover="event.preventDefault();this.classList.add('dragover')"
+        ondragleave="this.classList.remove('dragover')"
+        ondrop="dropZone(event,'zona-1',1)">
+        <div class="tipo-zone-hdr">
+          <span class="tipo-zone-title">Tipo I — 1 asignatura</span>
+          <span class="badge b-gray" id="z1-badge">0</span>
+        </div>
+        <div class="tipo-zone-chips" id="chips-zona-1">
+          <span style="font-size:11px;color:var(--text-tertiary)">Arrastra aquí...</span>
+        </div>
+      </div>
+      <div class="tipo-zone" id="zona-2"
+        ondragover="event.preventDefault();this.classList.add('dragover')"
+        ondragleave="this.classList.remove('dragover')"
+        ondrop="dropZone(event,'zona-2',2)">
+        <div class="tipo-zone-hdr">
+          <span class="tipo-zone-title">Tipo II — 2 asignaturas</span>
+          <span class="badge b-purple" id="z2-badge">0</span>
+        </div>
+        <div class="tipo-zone-chips" id="chips-zona-2">
+          <span style="font-size:11px;color:var(--text-tertiary)">Arrastra aquí...</span>
+        </div>
+      </div>
+      <div class="tipo-zone" id="zona-3"
+        ondragover="event.preventDefault();this.classList.add('dragover')"
+        ondragleave="this.classList.remove('dragover')"
+        ondrop="dropZone(event,'zona-3',3)">
+        <div class="tipo-zone-hdr">
+          <span class="tipo-zone-title">Tipo III — 3 asignaturas</span>
+          <span class="badge b-amber" id="z3-badge">0</span>
+        </div>
+        <div class="tipo-zone-chips" id="chips-zona-3">
+          <span style="font-size:11px;color:var(--text-tertiary)">Arrastra aquí...</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="actions-row" style="margin-top:1.5rem">
+      <button class="btn btn-danger" onclick="resetAsig()">Reiniciar asignaciones</button>
+      <button class="btn btn-primary" onclick="publicar()">Publicar asignación ↗</button>
+    </div>
+    <div class="alert-success" id="suc-dir">
+      ✅ Asignación publicada correctamente. Los investigadores recibirán notificación con el resultado, el nivel autorizado y los compromisos formalizados para el seguimiento.
+    </div>
+  </div>
+
+  <!-- ═══════════════ ADMIN ═══════════════ -->
+  <div id="view-admin" class="view">
+    <p class="sec-title">Configuración de bolsas por escuela</p>
+    <p class="sec-sub">Define cuántas asignaturas puede descargar cada unidad académica por semestre. Los cambios se reflejan en tiempo real en el formulario del investigador y en el panel del director.</p>
+
+    <div class="esc-grid" id="admin-grid"></div>
+
+    <div class="card">
+      <p style="font-size:14px;font-weight:600;margin-bottom:.9rem">Agregar nueva escuela o unidad académica</p>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Nombre de la escuela</label>
+          <input type="text" id="a-nombre" placeholder="Ej: Facultad de Derecho y Ciencias Sociales">
+        </div>
+        <div class="form-group">
+          <label>Bolsa inicial (asignaturas por semestre)</label>
+          <input type="number" id="a-bolsa" min="1" max="50" value="6">
+        </div>
+      </div>
+      <div class="actions-row" style="margin-top:.5rem">
+        <button class="btn btn-primary" onclick="addEscuela()">Agregar escuela ↗</button>
+      </div>
+    </div>
+    <div class="alert-success" id="suc-admin">✅ Cambios guardados correctamente.</div>
+  </div>
+
+</div><!-- /shell -->
+
+<footer>
+  Sistema de Descarga Académica · Propuesta institucional · Basado en el Reglamento Institucional para la Asignación de Descarga Académica con Fines de Investigación
+</footer>
+
+<script>
+// ═══ DATOS ═══
+const escuelas = [
+  {id:'e1', nombre:'Facultad de Ingeniería',         bolsa:10, color:'b-purple'},
+  {id:'e2', nombre:'Facultad de Ciencias',            bolsa:8,  color:'b-teal'},
+  {id:'e3', nombre:'Facultad de Medicina',            bolsa:6,  color:'b-blue'},
+  {id:'e4', nombre:'Instituto de Biotecnología',      bolsa:7,  color:'b-green'},
+  {id:'e5', nombre:'Posgrado e Investigación',        bolsa:12, color:'b-amber'},
+];
+
+const solicitudes = [
+  {id:'s1', nombre:'Dra. Sofía Ramírez',   escId:'e4', perfil:'Consolidada',       solicita:3, puntaje:88},
+  {id:'s2', nombre:'Dr. Marcos Ibáñez',    escId:'e1', perfil:'Consolidado',        solicita:2, puntaje:82},
+  {id:'s3', nombre:'Dra. Carmen Vega',     escId:'e2', perfil:'En consolidación',   solicita:2, puntaje:74},
+  {id:'s4', nombre:'Dr. Ernesto Leal',     escId:'e5', perfil:'Estratégico',        solicita:3, puntaje:70},
+  {id:'s5', nombre:'Dra. Paulina Torres',  escId:'e3', perfil:'En consolidación',   solicita:1, puntaje:67},
+  {id:'s6', nombre:'Dr. Héctor Moya',      escId:'e1', perfil:'Con potencial',      solicita:1, puntaje:58},
+  {id:'s7', nombre:'Dra. Alicia Fuentes',  escId:'e2', perfil:'Con potencial',      solicita:1, puntaje:52},
+  {id:'s8', nombre:'Dr. Iván Guerrero',    escId:'e3', perfil:'En consolidación',   solicita:2, puntaje:45},
+];
+
+// ═══ STATE ═══
+let nivelSel = 1;
+let currentStep = 1;
+let dragId = null;
+let dirEscId = escuelas[0].id;
+const zonaAsig = {'zona-1':[], 'zona-2':[], 'zona-3':[]};
+
+// ═══ HELPERS ═══
+const escById = id => escuelas.find(e => e.id === id);
+const totalAsig = escId => Object.values(zonaAsig).flat()
+  .map(id => solicitudes.find(s => s.id === id))
+  .filter(s => s && s.escId === escId)
+  .reduce((a,s) => a + s.solicita, 0);
+const disponible = escId => (escById(escId) || {bolsa:0}).bolsa - totalAsig(escId);
+const tipoLabel = n => ['','I','II','III'][n];
+const scoreColor = p => p >= 75 ? '#27500A' : p >= 60 ? '#633806' : '#791F1F';
+const scoreBarColor = p => p >= 75 ? '#639922' : p >= 60 ? '#BA7517' : '#A32D2D';
+
+// ═══ INVESTIGADOR ═══
+function populateEscSelect() {
+  const sel = document.getElementById('f-escuela');
+  sel.innerHTML = '<option value="">Selecciona tu escuela...</option>';
+  escuelas.forEach(e => {
+    const o = document.createElement('option');
+    o.value = e.id; o.textContent = e.nombre;
+    sel.appendChild(o);
+  });
+}
+
+function onEscuelaChange() {
+  const eid = document.getElementById('f-escuela').value;
+  const bi = document.getElementById('bolsa-info');
+  if (!eid) { bi.style.display = 'none'; return; }
+  const esc = escById(eid);
+  const disp = disponible(eid);
+  const pct = Math.round(((esc.bolsa - disp) / esc.bolsa) * 100);
+  bi.style.display = 'block';
+  document.getElementById('bolsa-esc-name').textContent = esc.nombre;
+  document.getElementById('bolsa-badge').textContent = disp + ' asignaturas disponibles';
+  const fill = document.getElementById('bolsa-fill');
+  fill.style.width = pct + '%';
+  fill.style.background = pct > 80 ? '#A32D2D' : pct > 50 ? '#BA7517' : '#534AB7';
+  document.getElementById('bolsa-detail').textContent =
+    'Usadas: ' + (esc.bolsa - disp) + ' de ' + esc.bolsa + ' · Restantes: ' + disp;
+  checkNivelVsDisp();
+}
+
+function selectNivel(n) {
+  nivelSel = n;
+  [1,2,3].forEach(i => document.getElementById('nc'+i).classList.toggle('selected', i === n));
+  checkNivelVsDisp();
+}
+
+function checkNivelVsDisp() {
+  const eid = document.getElementById('f-escuela').value;
+  const warn = document.getElementById('warn-cupo');
+  if (!eid) { warn.style.display = 'none'; return; }
+  warn.style.display = disponible(eid) < nivelSel ? 'block' : 'none';
+}
+
+function goStep(n) {
+  document.getElementById('step' + currentStep).style.display = 'none';
+  currentStep = n;
+  document.getElementById('step' + n).style.display = 'block';
+  ['sdot-1','sdot-2','sdot-3','sdot-4'].forEach((id, i) => {
+    const el = document.getElementById(id);
+    const cls = i+1 < n ? 's-done' : i+1 === n ? 's-active' : 's-pending';
+    el.className = 'step-dot ' + cls;
+    el.textContent = i+1 < n ? '✓' : i+1;
+  });
+  document.getElementById('prog').style.width = (n * 25) + '%';
+  if (n === 4) fillResumen();
+}
+
+function toggleAct(el) {
+  el.classList.toggle('checked');
+  el.textContent = el.classList.contains('checked') ? '✓' : '';
+}
+
+function fillResumen() {
+  const eid = document.getElementById('f-escuela').value;
+  document.getElementById('r-nombre').textContent = document.getElementById('f-nombre').value || '(sin nombre)';
+  document.getElementById('r-escuela').textContent = eid ? escById(eid).nombre : '(sin escuela)';
+  document.getElementById('r-nivel').textContent = 'Tipo ' + tipoLabel(nivelSel) + ' — ' + nivelSel + ' asignatura' + (nivelSel > 1 ? 's' : '');
+  document.getElementById('r-perfil').textContent = document.getElementById('f-perfil').value || '—';
+  document.getElementById('r-periodo').textContent = document.getElementById('f-periodo').value;
+  document.getElementById('r-proyecto').textContent = document.getElementById('f-titulo').value || '—';
+  document.getElementById('r-alin').textContent = document.getElementById('f-alin').value || '—';
+  document.getElementById('r-asig').textContent = nivelSel + ' asignatura' + (nivelSel > 1 ? 's' : '');
+}
+
+function enviar() {
+  document.getElementById('suc-inv').style.display = 'block';
+}
+
+// ═══ DIRECTOR ═══
+function renderEscFilter() {
+  const c = document.getElementById('esc-filter-btns');
+  c.innerHTML = '';
+  escuelas.forEach(e => {
+    const b = document.createElement('button');
+    b.className = 'btn btn-sm' + (e.id === dirEscId ? ' btn-primary' : '');
+    b.textContent = e.nombre.replace('Facultad de ','').replace('Instituto de ','Inst. ').replace('Posgrado e ','');
+    b.onclick = () => { dirEscId = e.id; renderDir(); };
+    c.appendChild(b);
+  });
+}
+
+function renderDir() {
+  renderEscFilter();
+  const esc = escById(dirEscId);
+  const asig = totalAsig(dirEscId);
+  const disp = disponible(dirEscId);
+  const solEsc = solicitudes.filter(s => s.escId === dirEscId).sort((a,b) => b.puntaje - a.puntaje);
+  const pct = Math.round((asig / esc.bolsa) * 100);
+
+  document.getElementById('m-total').textContent = esc.bolsa;
+  document.getElementById('m-asig').textContent = asig;
+  document.getElementById('m-disp').textContent = disp;
+  document.getElementById('m-sol').textContent = solEsc.length;
+  document.getElementById('esc-dir-name').textContent = esc.nombre;
+  document.getElementById('bolsa-pct-txt').textContent = asig + ' de ' + esc.bolsa + ' usadas (' + pct + '%)';
+  const bar = document.getElementById('bolsa-pct-bar');
+  bar.style.width = Math.min(pct, 100) + '%';
+  bar.style.background = pct > 80 ? '#A32D2D' : pct > 50 ? '#BA7517' : '#534AB7';
+  document.getElementById('bolsa-max-lbl').textContent = esc.bolsa + ' asignaturas';
+
+  // tabla solicitudes
+  const list = document.getElementById('dir-sol-list');
+  list.innerHTML = '';
+  if (solEsc.length === 0) {
+    list.innerHTML = '<div style="padding:16px 0;text-align:center;font-size:13px;color:var(--text-tertiary)">No hay solicitudes para esta escuela.</div>';
+  } else {
+    solEsc.forEach(s => {
+      const zEntry = Object.entries(zonaAsig).find(([,ids]) => ids.includes(s.id));
+      const estadoBadge = zEntry
+        ? `<span class="badge b-green">Tipo ${tipoLabel(parseInt(zEntry[0].slice(-1)))}</span>`
+        : `<span class="badge b-gray">Pendiente</span>`;
+      const row = document.createElement('div');
+      row.className = 'sol-row';
+      row.innerHTML = `
+        <div><div style="font-weight:600">${s.nombre}</div></div>
+        <div><span class="badge b-gray" style="font-size:10px">${s.perfil}</span></div>
+        <div>Tipo ${tipoLabel(s.solicita)}</div>
+        <div>
+          <div style="font-weight:600;color:${scoreColor(s.puntaje)}">${s.puntaje} pts</div>
+          <div class="score-bar-w"><div class="score-fill" style="width:${s.puntaje}%;background:${scoreBarColor(s.puntaje)}"></div></div>
+        </div>
+        <div style="font-size:12px">${s.solicita} asig.</div>
+        <div>${estadoBadge}</div>`;
+      list.appendChild(row);
+    });
+  }
+
+  renderPool();
+  renderZonas();
+}
+
+function renderPool() {
+  const pool = document.getElementById('drag-pool');
+  pool.innerHTML = '';
+  const asignados = Object.values(zonaAsig).flat();
+  const pending = solicitudes
+    .filter(s => s.escId === dirEscId && !asignados.includes(s.id))
+    .sort((a,b) => b.puntaje - a.puntaje);
+
+  if (pending.length === 0) {
+    pool.innerHTML = '<span class="drag-empty">Todas las solicitudes ya fueron asignadas.</span>';
+    return;
+  }
+  pending.forEach(s => {
+    const chip = document.createElement('div');
+    chip.className = 'drag-chip';
+    chip.draggable = true;
+    chip.dataset.id = s.id;
+    chip.innerHTML = `<span class="chip-name">${s.nombre}</span><span class="chip-meta">${s.puntaje} pts · Tipo ${tipoLabel(s.solicita)} · ${s.solicita} asig.</span>`;
+    chip.addEventListener('dragstart', () => { dragId = s.id; chip.classList.add('dragging'); });
+    chip.addEventListener('dragend', () => chip.classList.remove('dragging'));
+    pool.appendChild(chip);
+  });
+}
+
+function dropZone(e, zid, tipo) {
+  e.preventDefault();
+  document.getElementById(zid).classList.remove('dragover');
+  if (!dragId) return;
+  const s = solicitudes.find(x => x.id === dragId);
+  if (disponible(dirEscId) < tipo) {
+    alert('⚠️ No hay suficientes asignaturas en la bolsa de ' + escById(dirEscId).nombre + ' para esta descarga.\n\nDisponibles: ' + disponible(dirEscId) + ' · Requeridas: ' + tipo);
+    dragId = null; return;
+  }
+  if (s.solicita !== tipo) {
+    const ok = confirm(`${s.nombre} solicitó Tipo ${tipoLabel(s.solicita)} (${s.solicita} asig.), pero la estás asignando a Tipo ${tipoLabel(tipo)} (${tipo} asig.).\n\n¿Confirmas el cambio de nivel?`);
+    if (!ok) { dragId = null; return; }
+  }
+  zonaAsig[zid].push(dragId);
+  dragId = null;
+  renderDir();
+}
+
+function renderZonas() {
+  [1,2,3].forEach(t => {
+    const zid = 'zona-' + t;
+    const chips = document.getElementById('chips-' + zid);
+    chips.innerHTML = '';
+    const count = zonaAsig[zid].length;
+    document.getElementById('z' + t + '-badge').textContent = count + ' asignada' + (count !== 1 ? 's' : '');
+    if (count === 0) {
+      chips.innerHTML = '<span style="font-size:11px;color:var(--text-tertiary)">Arrastra aquí...</span>';
+      return;
+    }
+    zonaAsig[zid].forEach(id => {
+      const s = solicitudes.find(x => x.id === id);
+      const el = document.createElement('div');
+      el.className = 'chip-in-zone';
+      el.innerHTML = `<span style="font-weight:600;font-size:12px">${s.nombre}<br><span style="font-weight:400;font-size:10px;color:var(--text-tertiary)">${s.puntaje}pts</span></span><button class="remove-btn" onclick="removeZone('${zid}','${id}')">×</button>`;
+      chips.appendChild(el);
+    });
+  });
+}
+
+function removeZone(zid, id) {
+  zonaAsig[zid] = zonaAsig[zid].filter(x => x !== id);
+  renderDir();
+}
+
+function resetAsig() {
+  if (!confirm('¿Deseas reiniciar todas las asignaciones de esta escuela?')) return;
+  ['zona-1','zona-2','zona-3'].forEach(z => zonaAsig[z] = []);
+  document.getElementById('suc-dir').style.display = 'none';
+  renderDir();
+}
+
+function publicar() {
+  const total = Object.values(zonaAsig).flat()
+    .filter(id => solicitudes.find(s => s.id === id && s.escId === dirEscId)).length;
+  if (total === 0) { alert('Asigna al menos una descarga antes de publicar.'); return; }
+  document.getElementById('suc-dir').style.display = 'block';
+  renderDir();
+}
+
+// ═══ ADMIN ═══
+function renderAdminGrid() {
+  const grid = document.getElementById('admin-grid');
+  grid.innerHTML = '';
+  escuelas.forEach(e => {
+    const asig = totalAsig(e.id);
+    const disp = e.bolsa - asig;
+    const pct = Math.round((asig / e.bolsa) * 100);
+    const card = document.createElement('div');
+    card.className = 'esc-card';
+    card.innerHTML = `
+      <div class="esc-hdr">
+        <span class="esc-name">${e.nombre}</span>
+        <span class="badge ${e.color}">${e.bolsa}</span>
+      </div>
+      <div class="esc-bar">
+        <div class="esc-bar-fill" style="width:${pct}%;background:${pct>80?'#A32D2D':pct>50?'#BA7517':'#534AB7'}"></div>
+      </div>
+      <div class="esc-detail">${asig} usadas · ${disp} disponibles</div>
+      <div class="esc-acts">
+        <button class="btn btn-sm" onclick="editBolsa('${e.id}',-1)">− 1</button>
+        <button class="btn btn-sm" onclick="editBolsa('${e.id}',1)">+ 1</button>
+        <input type="number" value="${e.bolsa}" min="1" max="50"
+          style="width:58px;font-size:12px;padding:4px 7px"
+          onchange="setBolsa('${e.id}',+this.value)">
+      </div>`;
+    grid.appendChild(card);
+  });
+}
+
+function editBolsa(id, delta) {
+  const e = escById(id);
+  if (!e) return;
+  e.bolsa = Math.max(1, e.bolsa + delta);
+  renderAdminGrid();
+  onEscuelaChange();
+}
+
+function setBolsa(id, val) {
+  const e = escById(id);
+  if (!e || isNaN(val) || val < 1) return;
+  e.bolsa = val;
+  renderAdminGrid();
+  onEscuelaChange();
+}
+
+function addEscuela() {
+  const n = document.getElementById('a-nombre').value.trim();
+  const b = parseInt(document.getElementById('a-bolsa').value);
+  if (!n || !b || b < 1) { alert('Ingresa un nombre y una bolsa válida (mínimo 1).'); return; }
+  const colors = ['b-purple','b-teal','b-blue','b-green','b-amber'];
+  escuelas.push({
+    id: 'e' + Date.now(),
+    nombre: n,
+    bolsa: b,
+    color: colors[escuelas.length % colors.length]
+  });
+  document.getElementById('a-nombre').value = '';
+  document.getElementById('a-bolsa').value = '6';
+  renderAdminGrid();
+  populateEscSelect();
+  renderEscFilter();
+  const msg = document.getElementById('suc-admin');
+  msg.style.display = 'block';
+  setTimeout(() => msg.style.display = 'none', 3000);
+}
+
+// ═══ NAV ═══
+function switchView(v) {
+  ['inv','dir','admin'].forEach(x => {
+    document.getElementById('view-'+x).classList.toggle('active', x === v);
+  });
+  document.querySelectorAll('.tab').forEach((t,i) =>
+    t.classList.toggle('active', ['inv','dir','admin'][i] === v)
+  );
+  if (v === 'dir') renderDir();
+  if (v === 'admin') renderAdminGrid();
+}
+
+// ═══ INIT ═══
+populateEscSelect();
+renderDir();
+</script>
+</body>
 </html>
